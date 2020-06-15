@@ -19,6 +19,7 @@ patches which you can download, or you can just remove those steps from the buil
   *  A note on the build.sh script - you will notice that it does an export/import after the base build of the image, this is to squash the layers as these images can take up a lot of space.  Remember when you install the Oracle software it will take at least that much space.
   *  These images and scripts provided should be easy to customize to your needs
 
+3.  The oel-vnc folder contains the steps to create an Oracle Linux 7 image that has fluxbox and vnc installed to allow you to run things via a VNC session - there is some use cases where this might be useful so just added that here in case anyone interested.
 
 # Options
 You can either install the Oracle software and create a database at the same time and store it in the image, which 
