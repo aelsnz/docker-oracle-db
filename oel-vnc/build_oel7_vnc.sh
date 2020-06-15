@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Basic script to build base oracle linux images for oel5,6,7
+# Basic script to build base oracle linux 7 image with vnc capability
 
 c1="oel7-vnc"
 new_image="oraclelinux"
