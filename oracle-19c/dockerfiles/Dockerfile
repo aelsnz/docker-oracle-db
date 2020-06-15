@@ -1,0 +1,97 @@
+FROM aelsnz/oraclelinux:oel7
+## Using aelsnz/oraclelinux:oel7 image which include all prerequisites, oracle user and directory structure
+
+USER root
+
+# Expose Oracle and SSH Ports 
+#
+EXPOSE 22 1521
+
+# Copy software and response files into /install
+#
+COPY software/LINUX.X64_193000_db_home.zip /install/
+
+#
+# patch updates
+## Below is patch for Jan 2020 19.6.0.0.200114
+COPY software/p30557433_190000_Linux-x86-64.zip /install/
+COPY scripts/db.rsp /home/oracle/bin/
+COPY scripts/create-db.sh /home/oracle/bin/
+
+# make sure oracle user own /install
+#
+RUN chown -R oracle:oinstall /install \
+  && chown -R oracle:oinstall /home/oracle/bin/*.rsp \
+  && chown -R oracle:oinstall /home/oracle/bin/*.sh \
+  && chmod u+rx /home/oracle/bin/*.sh \
+  && mkdir -p /u01/app/oracle/product/19.0.0/dbhome_1 \
+  && chown -R oracle:oinstall /u01/app/oracle 
+
+# Switch to user Oracle
+#
+USER	oracle
+WORKDIR	/install
+
+# set current environment
+#
+ENV ORACLE_BASE=/u01/app/oracle
+ENV ORACLE_HOME=/u01/app/oracle/product/19.0.0/dbhome_1
+ENV PATH=/u01/app/oracle/product/19.0.0/dbhome_1/bin:/u01/app/oracle/product/19.0.0/dbhome_1/OPatch:$PATH
+ENV NLS_DATE_FORMAT=dd/mm/yyyy:hh24:mi:ss
+
+# Unzip software
+RUN	cd /u01/app/oracle/product/19.0.0/dbhome_1 \
+  && unzip /install/LINUX.X64_193000_db_home.zip \
+  && rm -rf /install/LINUX.X64_193000_db_home.zip 
+
+# Install Oracle Software
+# 
+RUN cd /u01/app/oracle/product/19.0.0/dbhome_1 \
+  && ./runInstaller -silent -waitForCompletion -responsefile /home/oracle/bin/db.rsp -ignorePrereqFailure || echo "Installer warnings..."
+
+# Switch back to root
+#
+USER	root
+RUN /u01/app/oraInventory/orainstRoot.sh \
+  && /u01/app/oracle/product/19.0.0/dbhome_1/root.sh -silent \
+  && cd ~
+
+# Switch back to Oracle user
+#
+USER oracle
+WORKDIR	/home/oracle
+
+# set current environment
+#
+
+ENV ORACLE_BASE=/u01/app/oracle
+ENV ORACLE_HOME=/u01/app/oracle/product/19.0.0/dbhome_1
+ENV PATH=/u01/app/oracle/product/19.0.0/dbhome_1/bin:/u01/app/oracle/product/19.0.0/dbhome_1/OPatch:$PATH
+ENV NLS_DATE_FORMAT="dd/mm/yyyy:hh24:mi:ss"
+
+## Lets apply latest patches
+RUN cd /install \
+  && unzip -q p30557433_190000_Linux-x86-64.zip \
+  && cd 30557433 \
+  && opatch apply -silent \
+  && opatch lsinventory \
+  && cd /install \
+  && rm -rf p30557433_190000_Linux-x86-64.zip \
+  && rm -rf 30557433 \
+  && cd 
+
+## Copy response file to create custom database 
+COPY scripts/dbca.rsp /home/oracle/
+COPY scripts/netca.rsp /home/oracle/
+
+### 
+# If you want to create the listener and database, uncomment the RUN commands below
+##
+# RUN netca -silent -responseFile /home/oracle/netca.rsp
+# RUN sed -i -e "s/^.*HOST.*/\ \ \ \ \ \ \ (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))/" $ORACLE_HOME/network/admin/listener.ora
+# RUN lsnrctl start \
+#   && dbca -silent -createDatabase -responseFile /home/oracle/dbca.rsp -enableArchive true
+
+# set entrypoint and run default bash command
+#
+CMD ["/bin/bash"]

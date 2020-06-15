@@ -1,0 +1,9 @@
+oel-vnc/software/x11vnc-0.9.13-11.el7.x86_64.rpm
+oel-vnc/software/fluxbox-1.3.7.tar.gz
+
+oracle-10g/software/*.tar.gz
+oracle-10g/software/*.zip
+oracle-11g/software/*.zip
+oracle-12c/software/*.zip
+oracle-18c/software/*.zip
+oracle-19c/software/*.zip

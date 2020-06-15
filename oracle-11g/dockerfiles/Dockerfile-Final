@@ -1,0 +1,25 @@
+ARG BASE
+
+FROM $BASE
+
+USER root
+  
+# Expose ssh and listener port
+#
+EXPOSE 22 1521 
+
+##
+# Switch to the Oracle user
+USER oracle
+WORKDIR /home/oracle
+
+# set current environment
+#
+ENV ORACLE_BASE=/u01/app/oracle
+ENV ORACLE_HOME=/u01/app/oracle/product/11.2.0.4/dbhome_1
+ENV PATH=/u01/app/oracle/product/11.2.0.4/dbhome_1/bin:/home/oracle/bin:$PATH
+ENV NLS_DATE_FORMAT="dd/mm/yyyy:hh24:mi:ss"
+
+## Specify Entrypoint - and default is to run bash shell
+CMD ["/bin/bash"]
+

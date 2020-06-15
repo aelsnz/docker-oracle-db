@@ -1,0 +1,667 @@
+########################################################################
+##                                                                    ##
+## Oracle 10g 10.2.0.5.0 Patch Set Install Response File Template     ##
+## --------------------------------------------------------------     ##
+##                                                                    ##
+## Copyright(c) Oracle Corporation 2008. All rights reserved.         ##
+##                                                                    ##
+## Specify values for the variables listed below to customize         ##
+## your installation.                                                 ##
+##                                                                    ##
+## Each variable is associated with a comment which explains          ##
+## how the variable is used and what effect it will have on           ##
+## your installation.  The default setting of the                     ##
+## DEPENDENCY_LIST variables installs the products included           ##
+## in a Typical install.                                              ##
+##                                                                    ##
+## Please specify values for the specific variable types              ##
+## in the following formats:                                          ##
+##                                                                    ##
+##         String       "Sample Value"                                ##
+##         Boolean      true or false                                 ##
+##         Number       1000                                          ##
+##         StringList   {"String value 1","String Value 2"}           ##
+##                                                                    ##
+## The values that are given as <Value Required> need to be           ##
+## specified for a silent installation to be successful.              ##
+##                                                                    ##
+##                                                                    ##
+########################################################################
+
+
+RESPONSEFILE_VERSION=2.2.1.0.0
+
+
+#-----------------------------------------------------------------------------
+# Name          : UNIX_GROUP_NAME
+# Datatype      : String
+# Description   : Unix group which will have write permissions on the
+#                 installer inventory directory
+# Valid values  : Any Unix group to which the current user belongs
+# value : None
+# Mandatory     : No
+#-----------------------------------------------------------------------------
+
+UNIX_GROUP_NAME=oinstall
+
+#-----------------------------------------------------------------------------
+# Name          : FROM_LOCATION
+# Datatype      : String
+# Description   : Complete path of the products.xml file from the staging area
+#                 where you untared your patch set. 
+# Valid values  : Full path ending in "products.xml"
+# Example value : "/patchset/oracle10g/stage/products.xml"
+# Default value : "../stage/products.xml"
+# Mandatory     : Yes
+#-----------------------------------------------------------------------------
+
+FROM_LOCATION=/install/Disk1/stage/products.xml
+
+#-----------------------------------------------------------------------------
+# Name          : NEXT_SESSION_RESPONSE
+# Datatype      : String
+# Description   : Optionally specifies the full path of next session's
+#                 response file. If only a file name is specified, the
+#                 response file is retrieved from <TEMP>\oraInstall
+#                 directory. This variable is only active if
+#                 NEXT_SESSION is set to true.
+# Valid values  : Full path to a valid response file or a response file name
+# Example value : "/tmp/install.rsp"
+# Default value : None
+# Mandatory     : No
+#-----------------------------------------------------------------------------
+
+NEXT_SESSION_RESPONSE=<Value Unspecified>
+
+#-----------------------------------------------------------------------------
+# Name          : ORACLE_HOME
+# Datatype      : String
+# Description   : Full path of existing Oracle Home directory to use for 
+#                 installing Oracle patch set, i.e. the target "Oracle Home"
+# Valid values  : Directory path
+# Example value : "/u01/app/oracle/products/10.2.0.5.0"
+# Default value : none
+# Mandatory     : Yes
+#-----------------------------------------------------------------------------
+
+ORACLE_HOME=/u01/app/oracle/product/10.2.0/db_1
+
+#-----------------------------------------------------------------------------
+# Name          : ORACLE_HOME_NAME
+# Datatype      : String
+# Description   : Oracle Home Name. Used in creating folders and services.
+# Valid values  : any string not used for any Oracle HOME
+# Example value : ORACLE_HOME_NAME = "OHOME1"
+# Default value : OHOME1 
+# Mandatory     : Yes
+#-----------------------------------------------------------------------------
+
+ORACLE_HOME_NAME=OraDbHome1
+
+#-----------------------------------------------------------------------------
+# Name          : TOPLEVEL_COMPONENT
+# Datatype      : StringList
+# Description   : Top-level product and version to install
+                  The format is of the form {"<Internal name>", "<version>"}
+# Note          : DO NOT CHANGE THE DEFAULT VALUE.
+#                 To install different top-level products, use one of the
+#                 other response file templates
+# Mandatory     : Yes
+#-----------------------------------------------------------------------------
+
+TOPLEVEL_COMPONENT={"oracle.patchset.db","10.2.0.5.0"}
+
+#-----------------------------------------------------------------------------
+# Name          : SHOW_SPLASH_SCREEN
+# Datatype      : Boolean
+# Description   : Set to true to show the initial splash screen of the
+#                 installer
+# Valid values  : true, false
+# Default value : false
+# Mandatory     : No
+#-----------------------------------------------------------------------------
+
+SHOW_SPLASH_SCREEN=false
+
+#-----------------------------------------------------------------------------
+# Name          : SHOW_WELCOME_PAGE
+# Datatype      : Boolean
+# Description   : Set to true to show the Welcome page of the installer
+# Valid values  : true, false
+# Default value : false
+# Mandatory     : No
+#-----------------------------------------------------------------------------
+
+SHOW_WELCOME_PAGE=false
+
+#-----------------------------------------------------------------------------
+# Name          : SHOW_COMPONENT_LOCATIONS_PAGE
+# Datatype      : Boolean
+# Description   : Set to true to show the component locations page in
+#                 the installer.  This page only appears if there are
+#                 products whose install directories can be changed.
+#                 If you set this to false you will prevent the user
+#                 from specifying alternate install directories.
+# Valid values  : true, false
+# Default value : false
+# Mandatory     : No
+#-----------------------------------------------------------------------------
+
+SHOW_COMPONENT_LOCATIONS_PAGE=false
+
+#-----------------------------------------------------------------------------
+# Name          : SHOW_CUSTOM_TREE_PAGE
+# Datatype      : Boolean
+# Description   : Set to true to display the available products
+#                 selection tree during a Custom install
+# Valid values  : true, false
+# Default value : false
+# Mandatory     : No
+#-----------------------------------------------------------------------------
+
+SHOW_CUSTOM_TREE_PAGE=false
+
+#-----------------------------------------------------------------------------
+# Name          : SHOW_SUMMARY_PAGE
+# Datatype      : Boolean
+# Description   : Set to true to display the Summary page in the
+#                 installer
+# Valid values  : true, false
+# Default value : false
+# Mandatory     : No
+#-----------------------------------------------------------------------------
+
+SHOW_SUMMARY_PAGE=false
+
+#-----------------------------------------------------------------------------
+# Name          : SHOW_INSTALL_PROGRESS_PAGE
+# Datatype      : Boolean
+# Description   : Set to true to show the install progress screen.
+#                 This screen shows detailed status of the
+#                 installation, which file is being copied, which link
+#                 action is being performed, etc.  It also shows
+#                 percentage complete.
+# Valid values  : true, false
+# Default value : true
+# Mandatory     : Yes
+#-----------------------------------------------------------------------------
+
+SHOW_INSTALL_PROGRESS_PAGE=true
+
+#-----------------------------------------------------------------------------
+# Name          : SHOW_REQUIRED_CONFIG_TOOL_PAGE
+# Datatype      : Boolean
+# Description   : Set to true to display the status screen for
+#                 required configuration tools.  This screen shows the
+#                 status of each tool along with detailed information
+#                 in the event of tool failure.
+# Valid values  : true, false
+# Default value : true
+# Mandatory     : Yes
+#-----------------------------------------------------------------------------
+
+SHOW_REQUIRED_CONFIG_TOOL_PAGE=false
+
+#-----------------------------------------------------------------------------
+# Name          : SHOW_OPTIONAL_CONFIG_TOOL_PAGE
+# Datatype      : Boolean
+# Description   : Set to true to display the optional configuration
+#                 tool page which allows you to launch optional
+#                 configuration tools and view details status,
+#                 including details on any failures.
+# Valid values  : true, false
+# Default value : false
+# Mandatory     : No
+#-----------------------------------------------------------------------------
+
+SHOW_OPTIONAL_CONFIG_TOOL_PAGE=false
+
+#-----------------------------------------------------------------------------
+# Name          : SHOW_CONFIG_TOOL_PAGE
+# Datatype      : Boolean
+# Description   : Set to true if the config assistants page in OUI needs to be
+#                 shown. This page shows the list of configuration assistants
+#                 that are part of this installation and are configured to
+#                 launch automatically.
+#                 It shows the status of each assistant, including any failures 
+#                 with detailed information on why it failed.
+# Valid values  : true, false
+# Default value : false
+# Example value : SHOW_CONFIG_TOOL_PAGE = true
+#-----------------------------------------------------------------------------
+
+SHOW_CONFIG_TOOL_PAGE=false
+
+#-----------------------------------------------------------------------------
+# Name          : SHOW_XML_PREREQ_PAGE
+# Datatype      : Boolean
+# Description   : This variable determines whether or not to show the prereq
+#                 page.
+# Valid values  : true, false
+# Default value : false
+# Example value : SHOW_XML_PREREQ_PAGE = true
+#-----------------------------------------------------------------------------
+
+SHOW_XML_PREREQ_PAGE=false
+
+#-----------------------------------------------------------------------------
+# Name          : SHOW_RELEASE_NOTES
+# Datatype      : Boolean
+# Description   : Set to true to show the release notes screen from
+#                 which Release Notes can be viewed.  NOTE, 10.2.0.5.0 does
+#                 not use any release notes so this will not be
+#                 relevant for an 10.2.0.5.0 install.
+# Valid values  : true, false
+# Default value : false
+# Mandatory     : No
+#-----------------------------------------------------------------------------
+
+SHOW_RELEASE_NOTES=false
+
+#-----------------------------------------------------------------------------
+# Name          : SHOW_END_OF_INSTALL_MSGS
+# Datatype      : Boolean
+# Description   : Set to true if the text on end of install screen is to be
+#                 shown. The text is always available under
+#                 <Oracle Home>/install/readme.txt.
+# Valid values  : true, false
+# Default value : true
+# Example value : SHOW_END_OF_INSTALL_MSGS = true
+# Mandatory     : No
+#-----------------------------------------------------------------------------
+
+SHOW_END_OF_INSTALL_MSGS=true
+
+#-----------------------------------------------------------------------------
+# Name          : SHOW_ROOTSH_CONFIRMATION
+# Datatype      : Boolean
+# Description   : Set to true to display the dialog which prompts the
+#                 user to run root.sh before a database is created.
+#                 If this is set to false, the root.sh script can be
+#                 run manually after installation, but the Database
+#                 Configuration Assistant may not have permissions to
+#                 update the oratab file if this is the first Oracle
+#                 installation on the machine.
+# Valid values  : true, false
+# Default value : true
+# Mandatory     : No
+#-----------------------------------------------------------------------------
+
+SHOW_ROOTSH_CONFIRMATION=true
+
+#-----------------------------------------------------------------------------
+# Name          : SHOW_END_SESSION_PAGE
+# Datatype      : Boolean
+# Description   : Set to true to display end session dialog.  This
+#                 page shows whether the installation is successful.
+# Valid values  : true, false
+# Default value : false
+# Mandatory     : No
+#-----------------------------------------------------------------------------
+
+SHOW_END_SESSION_PAGE=false
+
+#-----------------------------------------------------------------------------
+# Name          : SHOW_EXIT_CONFIRMATION
+# Datatype      : Boolean
+# Description   : Set to true to display dialog for confirming exit.
+#                 If set to false, installer will exit without
+#                 prompting.
+# Valid values  : true, false
+# Default value : false
+# Mandatory     : No
+#-----------------------------------------------------------------------------
+
+SHOW_EXIT_CONFIRMATION=false
+
+#-----------------------------------------------------------------------------
+# Name          : NEXT_SESSION
+# Datatype      : Boolean
+# Description   : Set to true to allow users to go back to the File
+#                 Locations page for another installation.  If this is
+#                 set to true, NEXT_SESSION_RESPONSE should be used to
+#                 indicate location of the second reponse file.
+# Valid values  : true, false
+# Default value : false
+# Mandatory     : No
+#-----------------------------------------------------------------------------
+
+NEXT_SESSION=false
+
+#-----------------------------------------------------------------------------
+# Name          : NEXT_SESSION_ON_FAIL
+# Datatype      : Boolean
+# Description   : Set to true to allow users to go back to the File
+#                 Locations page for another installation even if the
+#                 first installation failed.  This flag is only
+#                 relevant if NEXT_SESSION is set to true.
+# Valid values  : true, false
+# Default value : false
+# Mandatory     : No
+#-----------------------------------------------------------------------------
+
+NEXT_SESSION_ON_FAIL=false
+
+#-----------------------------------------------------------------------------
+# Name          : SHOW_DEINSTALL_CONFIRMATION
+# Datatype      : Boolean
+# Description   : Set to true if deinstall confimation is needed during a
+#                 deinstall session.
+# Valid values  : true, false
+# Default value : false
+# Example value : SHOW_DEINSTALL_CONFIRMATION = true
+#-----------------------------------------------------------------------------
+
+SHOW_DEINSTALL_CONFIRMATION=false
+
+#-----------------------------------------------------------------------------
+# Name          : SHOW_DEINSTALL_PROGRESS
+# Datatype      : Boolean
+# Description   : Set to true if deinstall progress is needed during a deinstall
+#                 session.
+# Valid values  : true, false
+# Default value : false
+# Example value : SHOW_DEINSTALL_PROGRESS = true
+#-----------------------------------------------------------------------------
+
+SHOW_DEINSTALL_PROGRESS=false
+
+#-----------------------------------------------------------------------------
+# Name          : ACCEPT_LICENSE_AGREEMENT
+# Datatype      : Boolean
+# Description   : By setting this variable to true, you are accepting the
+#                 license agreement. This variable is used only for silent
+#                 installations.
+# Valid values  : true, false
+# Default value : true
+# Example       : ACCEPT_LICENSE_AGREEMENT = true
+#-----------------------------------------------------------------------------
+
+ACCEPT_LICENSE_AGREEMENT=true
+
+#-----------------------------------------------------------------------------
+# Name          : RESTART_SYSTEM
+# Datatype      : Boolean
+# Description   : Set to true to allow automatic restart of the system, if set
+#                 to false then installer will exit without restarting, no exit
+#                 confirmation dialog is shown
+# Valid values  : true, false
+# Default value : true
+# Example value : RESTART_SYSTEM = false
+#-----------------------------------------------------------------------------
+
+RESTART_SYSTEM=false
+
+#-----------------------------------------------------------------------------
+# Name          : CLUSTER_NODES
+# Datatype      : StringList
+# Description   : This variable represents the cluster node names selected by
+#                 the user for installation.
+# Valid values  : {"node","node2"}
+# Default value : none
+# Example value : CLUSTER_NODES = {"node1"}
+#-----------------------------------------------------------------------------
+
+CLUSTER_NODES=<Value Unspecified>
+
+#-----------------------------------------------------------------------------
+# Name          : OUI_HOSTNAME
+# Datatype      : String
+# Description   : This variable holds the hostname of the system as set by the
+#                  user.
+# Valid values  : any string
+# Default value : none
+# Example       : OUI_HOSTNAME = host1
+#-----------------------------------------------------------------------------
+
+OUI_HOSTNAME=<Value Unspecified>
+
+#-----------------------------------------------------------------------------
+# Name          : REMOVE_HOMES
+# Datatype      : StringList
+# Description   : List of the homes to be removed during a deinstall session.
+#                 Each home is represented by its full path.
+# Valid values  : {"string1","string2",...}
+# Default value : none
+# Example value : REMOVE_HOMES = {<path_of_home1>,<path_of_home2>, ...}
+#-----------------------------------------------------------------------------
+
+REMOVE_HOMES=<Value Unspecified>
+
+#-----------------------------------------------------------------------------
+# Name          : COMPONENT_LANGUAGES
+# Datatype      : StringList
+# Description   : Languages in which the components will be installed.
+#                 The following choices are available. The value should
+#                 contain only one of these choices.
+#                 The choices are of the form Internal Name : External name.
+#                 Please use the internal name while specifying the value.
+# Valid values  :
+#    en,   : English
+#    fr,   : French
+#    ar,   : Arabic
+#    bn,   : Bengali
+#    pt_BR,   : Brazilian Portuguese
+#    bg,   : Bulgarian
+#    fr_CA,   : Canadian French
+#    ca,   : Catalan
+#    hr,   : Croatian
+#    cs,   : Czech
+#    da,   : Danish
+#    nl,   : Dutch
+#    ar_EG,   : Egyptian
+#    en_GB,   : English (United Kingdom)
+#    et,   : Estonian
+#    fi,   : Finnish
+#    de,   : German
+#    el,   : Greek
+#    iw,   : Hebrew
+#    hu,   : Hungarian
+#    is,   : Icelandic
+#    in,   : Indonesian
+#    it,   : Italian
+#    ja,   : Japanese
+#    ko,   : Korean
+#    es,   : Latin American Spanish
+#    lv,   : Latvian
+#    lt,   : Lithuanian
+#    ms,   : Malay
+#    es_MX,   : Mexican Spanish
+#    no,   : Norwegian
+#    pl,   : Polish
+#    pt,   : Portuguese
+#    ro,   : Romanian
+#    ru,   : Russian
+#    zh_CN,   : Simplified Chinese
+#    sk,   : Slovak
+#    sl,   : Slovenian
+#    es_ES,   : Spanish
+#    sv,   : Swedish
+#    th,   : Thai
+#    zh_TW,   : Traditional Chinese
+#    tr,   : Turkish
+#    uk,   : Ukrainian
+#    vi,   : Vietnamese
+# Default value : en
+# Mandatory     : No
+#-----------------------------------------------------------------------------
+
+COMPONENT_LANGUAGES={"en"}
+
+#-----------------------------------------------------------------------------
+# End of GENERAL SESSION section
+#-----------------------------------------------------------------------------
+#
+# Oracle10g R2 Patch 2
+#
+
+#-----------------------------------------------------------------------------
+# Name          : sl_userNodelist
+# Datatype      : StringList
+# Description   : This variable should only be used if cluster hardware and
+#                 software is configured according to specifications for
+#                 Real Application Clusters in the Oracle10g Installation Guide.
+#                 Specify a list of nodes on which this installation should
+#                 be duplicated.
+# Valid values  : Any list of machine names which are part of a cluster along
+#                 with the machine where the installer is being run.
+# Example value : {"CLUST1","CLUST2","CLUST3"}
+# Default value : {}
+# Mandatory     : No
+#-----------------------------------------------------------------------------
+
+sl_userNodeList=<Value Unspecified>
+
+###############################################################################
+#                                                                             #
+# Dialog: Oracle Direct Connect Identification                                #
+# -----------------------------------------                                   #
+#
+# Oracle direct connect allows you to associate your configuration information#
+# with your Metalink account. When you log your service request with Oracle,  #
+# you will be able to link the request with the pre-collected configuration   #
+# in this ORACLE HOME                                                         #
+###############################################################################
+
+#------------------------------------------------------------------------------
+# Name       : MYORACLESUPPORT_USERNAME
+# Datatype   : String
+# Description: My Oracle Support username .
+#
+#  Example   : MYORACLESUPPORT_USERNAME="username"
+#------------------------------------------------------------------------------
+MYORACLESUPPORT_USERNAME=x
+
+#------------------------------------------------------------------------------
+# Name       : MYORACLESUPPORT_PASSWORD
+# Datatype   : String
+# Description: Stores the My Oracle Support password.
+#
+# Example    : MYORACLESUPPORT_PASSWORD="password"
+#------------------------------------------------------------------------------
+MYORACLESUPPORT_PASSWORD=x
+
+#------------------------------------------------------------------------------
+# Name       : PROXY_HOST
+# Datatype   : String
+# Description: Stores the Proxy server name. Length should be greater than zero.
+#
+# Example    : PROXY_HOST="server.domain.com"
+#------------------------------------------------------------------------------
+PROXY_HOST=
+
+#------------------------------------------------------------------------------
+# Name       : PROXY_PORT
+# Datatype   : String
+# Description: Stores the proxy port number. Should be Numeric and atleast 2 chars.
+#
+# Example    : PROXY_PORT="25"
+#------------------------------------------------------------------------------
+PROXY_PORT=
+
+#------------------------------------------------------------------------------
+# Name       : PROXY_USER
+# Datatype   : String
+# Description: Stores the proxy user name. Leave s_userName and s_proxyPassword
+# blank if your proxy server requires no authentication.
+#
+# Example    : PROXY_USER="username"
+#------------------------------------------------------------------------------
+PROXY_USER=
+
+#------------------------------------------------------------------------------
+# Name       : PROXY_PWD
+# Datatype   : String
+# Description: Stores the proxy password. Leave s_userName and s_proxyPassword
+# blank if your proxy server requires no authentication.
+#
+# Example    : PROXY_PWD="password"
+#------------------------------------------------------------------------------
+PROXY_PWD=
+
+#------------------------------------------------------------------------------
+# Name          : SECURITY_UPDATES_VIA_MYORACLESUPPORT
+# Datatype      : Boolean
+# Description   : This is set to true to enable the user to set the password for
+# My Oracle Support credentials.
+# Valid values  : true,false
+# Default value : false
+# Mandatory     : No
+#------------------------------------------------------------------------------
+SECURITY_UPDATES_VIA_MYORACLESUPPORT=false
+
+#------------------------------------------------------------------------------
+# Name          : DECLINE_SECURITY_UPDATES
+# Datatype      : Boolean
+# Description   : This is set to false,if user don't want to give any proxy
+# details for connection.
+# My Oracle Support credentials.
+# Valid values  : true,false
+# Default value : false
+# Mandatory     : No
+#------------------------------------------------------------------------------
+DECLINE_SECURITY_UPDATES=true
+
+#------------------------------------------------------------------------------
+# Name          : COLLECTOR_UPGRADE
+# Datatype      : Boolean
+# Description   : This is set to true,if OCM is already configured.
+# Metalink credentials.
+# Valid values  : true,false
+# Default value : false
+# Mandatory     : No
+#------------------------------------------------------------------------------
+COLLECTOR_UPGRADE=false
+
+#------------------------------------------------------------------------------
+# Name          : COLLECTOR_IGNORE_CONFIGURATION
+# Datatype      : Boolean
+# Description   : This is set to true to ignore OCM configuration page display.
+# Metalink credentials.
+# Valid values  : true,false
+# Default value : false
+# Mandatory     : No
+#------------------------------------------------------------------------------
+COLLECTOR_IGNORE_CONFIGURATION=true
+
+#------------------------------------------------------------------------------
+# Name          : COLLECTOR_IGNORE_FAILURES
+# Datatype      : Boolean
+# Description   : This is set to true to ignore OCM related errors.
+# Metalink credentials.
+# Valid values  : true,false
+# Default value : false
+# Mandatory     : No
+#------------------------------------------------------------------------------
+COLLECTOR_IGNORE_FAILURES=true
+
+#------------------------------------------------------------------------------
+# Name          : COLLECTOR_USE_OBFUSCATED_PASSWORDS
+# Datatype      : Boolean
+# Description   : This is set to true to obfuscate the passwords.
+# Valid values  : true,false
+# Default value : false
+# Mandatory     : No
+#------------------------------------------------------------------------------
+COLLECTOR_USE_OBFUSCATED_PASSWORDS=<Value Unspecified>
+
+#------------------------------------------------------------------------------
+# Name          : COLLECTOR_RESPONSE_FILE
+# Datatype      : Boolean
+# Description   : This is set to true to use the existing response file for the
+# configuration.
+# Valid values  : true,false
+# Default value : false
+# Mandatory     : No
+#------------------------------------------------------------------------------
+COLLECTOR_RESPONSE_FILE=<Value Unspecified>
+
+#------------------------------------------------------------------------------
+# Name       : COLLECTOR_SUPPORTHUB_URL
+# Datatype   : String
+# Description: Oracle Support Hub URL.
+#
+# Example    : COLLECTOR_SUPPORTHUB_URL=http://hostname.domain.com:port
+#------------------------------------------------------------------------------
+COLLECTOR_SUPPORTHUB_URL=<Value Unspecified>
+

@@ -1,0 +1,43 @@
+FROM oraclelinux:5.11
+
+USER root
+
+# Expose SSH Ports 
+#
+EXPOSE 22 
+
+# Add Oracle user and groups 
+#
+RUN groupadd -g 501 oinstall \
+  && groupadd -g 502 dba \
+  && groupadd -g 503 oper \
+  && groupadd -g 504 asmadmin \
+  && groupadd -g 505 asmdba \
+  && groupadd -g 506 asmoper \
+  && groupadd -g 507 bkpdba \
+  && groupadd -g 508 dgdba \
+  && groupadd -g 509 kmdba \
+  && useradd -m -g oinstall -G oinstall,dba,oper,asmadmin,asmdba,bkpdba,dgdba,kmdba -u 501 oracle 
+
+# Add a few additional packages
+#
+RUN echo multilib_policy=best >> /etc/yum.conf \
+ && yum -y --enablerepo=el5_latest,el5_addons install patch bc binutils bzip2 bzip2-devel curl dos2unix gcc gcc-c++ gzip libaio libgcc libstdc++ libstdc++-devel lsof make man man-pages net-tools nss-devel perl strace subversion sudo sysstat tar tree unix2dos unzip wget which zip zlib zlib-devel gettext tcl tcl-devel openssh openssh-server xclock xhost psmisc xorg-x11-fonts* xorg-x11-server-Xvfb.x86_64 xterm tk libXtst xorg-x11-utils screen gdb patch \
+ && yum clean all \
+ && rm -rf /var/cache/yum/*
+
+# Update sudoers and create directories:
+#
+RUN echo "oracle           ALL=(ALL)       NOPASSWD:ALL" >> /etc/sudoers \
+  && echo "Defaults !requiretty"  >> /etc/sudoers \
+  && mkdir /install \ 
+  && mkdir -p /u01/app/oracle \
+  && mkdir -p /home/oracle/bin \
+  && chown -R oracle:oinstall /u01/app \
+  && chown -R oracle:oinstall /install \
+  && chown -R oracle:oinstall /home/oracle/bin
+
+# set entrypoint and run default bash command
+#
+CMD ["/bin/bash"]
+

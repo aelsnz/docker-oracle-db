@@ -1,0 +1,35 @@
+ARG BASE
+
+## Use the argument image as base to create new image from
+FROM $BASE
+
+## Switch to the root user
+USER root
+
+# Expose ports for ssh and oracle listener
+#
+EXPOSE 22 1521 
+
+##
+# Switch to the Oracle user
+USER oracle
+WORKDIR /home/oracle
+
+## set current environment, in example below the database ORACLE_SID is set to DEV
+#  this can be adjusted to your database name, or removed to leave blank
+#  SQLPATH is set in case you have your own scripts in ~/sql - you could mount a volume to reuse local 
+#  location that is made available to the container
+#  NLS_DATA_FORMAT is set to allow for more clear data/time in RMAN etc.
+#
+ENV ORACLE_SID=DEV
+ENV ORACLE_BASE=/u01/app/oracle
+ENV ORACLE_HOME=/u01/app/oracle/product/10.2.0/db_1
+ENV LD_LIBRARY_PATH=/u01/app/oracle/product/10.2.0/db_1/lib:$LD_LIBRARY_PATH
+ENV PATH=/home/oracle/bin:/usr/local/git/bin:/u01/app/oracle/product/10.2.0/db_1/bin:/u01/app/oracle/product/10.2.0/db_1/OPatch:$PATH
+ENV NLS_DATE_FORMAT="dd/mm/yyyy:hh24:mi:ss"
+ENV SQLPATH=/home/oracle/sql
+
+
+## Specify Entrypoint 
+# - and default is to run bash shell, this can be adjusted to call script to create/start the database
+CMD ["/usr/bin/bash"]

@@ -1,0 +1,27 @@
+ARG BASE
+
+FROM $BASE
+
+USER root
+
+# Expose ssh and oracle listener
+#
+EXPOSE 22 1521 
+
+##
+# Switch to the Oracle user
+USER oracle
+WORKDIR /home/oracle
+
+# set current environment
+#
+ENV ORACLE_SID=DEV
+ENV ORACLE_BASE=/u01/app/oracle
+ENV ORACLE_HOME=/u01/app/oracle/product/19.0.0/dbhome_1
+ENV LD_LIBRARY_PATH=/u01/app/oracle/product/19.0.0/dbhome_1/lib:$LD_LIBRARY_PATH
+ENV PATH=/home/oracle/bin:/usr/local/git/bin:/u01/app/oracle/product/19.0.0/dbhome_1/bin:/u01/app/oracle/product/19.0.0/dbhome_1/OPatch:$PATH
+ENV NLS_DATE_FORMAT="dd/mm/yyyy:hh24:mi:ss"
+ENV SQLPATH=/home/oracle/sql
+
+## Specify Entrypoint - and default is to run bash shell
+CMD ["/usr/bin/bash"]

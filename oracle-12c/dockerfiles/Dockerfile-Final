@@ -1,0 +1,32 @@
+ARG BASE
+FROM $BASE
+
+USER root
+
+# Expose Dbvserver HTTPS Port 4433 
+#
+EXPOSE 22 1521
+
+##
+# Switch to the Oracle user
+USER oracle
+
+WORKDIR /home/oracle
+
+## set current environment, in example below the database ORACLE_SID is set to DEV
+#  this can be adjusted to your database name, or removed to leave blank
+#  SQLPATH is set in case you have your own scripts in ~/sql - you could mount a volume to reuse local 
+#  location that is made available to the container
+#  NLS_DATA_FORMAT is set to allow for more clear data/time in RMAN etc.
+#
+ENV ORACLE_SID=DEV
+ENV ORACLE_BASE=/u01/app/oracle
+ENV ORACLE_HOME=/u01/app/oracle/product/12.2.0.1/dbhome_1
+ENV PATH=/home/oracle/bin:/usr/local/git/bin:/u01/app/oracle/product/12.2.0.1/dbhome_1/bin:/u01/app/oracle/product/12.2.0.1/dbhome_1/OPatch:/home/oracle/bin:$PATH
+ENV NLS_DATE_FORMAT="dd/mm/yyyy:hh24:mi:ss"
+ENV SQLPATH=/home/oracle/sql
+
+
+## Specify Entrypoint - and default is to run bash shell
+CMD ["/usr/bin/bash"]
+
